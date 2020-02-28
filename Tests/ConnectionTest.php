@@ -19,16 +19,16 @@ use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Drift\DBAL\Connection;
 use Drift\DBAL\DBALBundle;
+use function Clue\React\Block\await;
 use Mmoreram\BaseBundle\Kernel\DriftBaseKernel;
 use Mmoreram\BaseBundle\Tests\BaseFunctionalTest;
 use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\HttpKernel\KernelInterface;
-use function Clue\React\Block\await;
 
 /**
- * Class ConnectionTest
+ * Class ConnectionTest.
  */
 abstract class ConnectionTest extends BaseFunctionalTest
 {
@@ -64,7 +64,7 @@ abstract class ConnectionTest extends BaseFunctionalTest
                     ],
                 ],
             ],
-            'dbal' => static::getDBALConfiguration()
+            'dbal' => static::getDBALConfiguration(),
         ];
 
         return new DriftBaseKernel(
@@ -79,14 +79,14 @@ abstract class ConnectionTest extends BaseFunctionalTest
     }
 
     /**
-     * Get DBAL configuration
+     * Get DBAL configuration.
      *
      * @return array
      */
     abstract protected static function getDBALConfiguration(): array;
 
     /**
-     * Test connection is built
+     * Test connection is built.
      */
     public function testConnectionIsBuilt()
     {
@@ -95,7 +95,7 @@ abstract class ConnectionTest extends BaseFunctionalTest
     }
 
     /**
-     * Test find one element
+     * Test find one element.
      */
     public function testFindOneSimpleElement()
     {
@@ -103,28 +103,28 @@ abstract class ConnectionTest extends BaseFunctionalTest
 
         $promise = $connection
             ->dropTable('test')
-            ->otherwise(function(TableNotFoundException $_) use ($connection) {
+            ->otherwise(function (TableNotFoundException $_) use ($connection) {
                 return $connection;
             })
-            ->then(function(Connection $connection) {
+            ->then(function (Connection $connection) {
                 return $connection->createTable('test', ['id' => 'string']);
             })
-            ->otherwise(function(TableExistsException $_) use ($connection) {
+            ->otherwise(function (TableExistsException $_) use ($connection) {
                 // Silent pass
 
                 return $connection;
             })
-            ->then(function(Connection $connection) {
+            ->then(function (Connection $connection) {
                 return $connection
                     ->insert('test', ['id' => '1'])
-                    ->then(function() use ($connection) {
+                    ->then(function () use ($connection) {
                         return $connection;
                     });
             })
-            ->then(function(Connection $connection) {
+            ->then(function (Connection $connection) {
                 return $connection->findOneBy('test', ['id' => '1']);
             })
-            ->then(function(array $result) {
+            ->then(function (array $result) {
                 $this->assertEquals('1', $result['id']);
             });
 

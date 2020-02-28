@@ -15,9 +15,7 @@ declare(strict_types=1);
 
 namespace Drift\DBAL;
 
-use Drift\DBAL\DependencyInjection\CompilerPass\MysqlConnectionCompilerPass;
-use Drift\DBAL\DependencyInjection\CompilerPass\PostgresConnectionCompilerPass;
-use Drift\DBAL\DependencyInjection\CompilerPass\SQLiteConnectionCompilerPass;
+use Drift\DBAL\DependencyInjection\CompilerPass\ConnectionCompilerPass;
 use Drift\DBAL\DependencyInjection\DBALExtension;
 use Mmoreram\BaseBundle\BaseBundle;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -48,9 +46,7 @@ class DBALBundle extends BaseBundle
     public function getCompilerPasses(): array
     {
         return [
-            new MysqlConnectionCompilerPass(),
-            new PostgresConnectionCompilerPass(),
-            new SQLiteConnectionCompilerPass(),
+            new ConnectionCompilerPass(),
         ];
     }
 }
