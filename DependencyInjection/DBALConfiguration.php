@@ -36,21 +36,14 @@ class DBALConfiguration extends BaseConfiguration
                 ->arrayNode('connections')
                     ->prototype('array')
                         ->beforeNormalization()
-                            ->always(function(array $connection) {
+                            ->always(function (array $connection) {
                                 if ('sqlite' !== $connection['driver']) {
-
                                     if (empty($connection['host'])) {
-                                        throw new InvalidConfigurationException(sprintf(
-                                            'Host must be configured using driver %s',
-                                            $connection['driver']
-                                        ));
+                                        throw new InvalidConfigurationException(sprintf('Host must be configured using driver %s', $connection['driver']));
                                     }
 
                                     if (empty($connection['port'])) {
-                                        throw new InvalidConfigurationException(sprintf(
-                                            'Port must be configured using driver %s',
-                                            $connection['driver']
-                                        ));
+                                        throw new InvalidConfigurationException(sprintf('Port must be configured using driver %s', $connection['driver']));
                                     }
                                 }
 

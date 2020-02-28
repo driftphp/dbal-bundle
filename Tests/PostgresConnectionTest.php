@@ -16,12 +16,12 @@ declare(strict_types=1);
 namespace Drift\DBAL\Tests;
 
 /**
- * Class PostgresConnectionTest
+ * Class PostgresConnectionTest.
  */
 class PostgresConnectionTest extends ConnectionTest
 {
     /**
-     * Get configuration
+     * Get configuration.
      *
      * @return array
      */
@@ -36,8 +36,8 @@ class PostgresConnectionTest extends ConnectionTest
                     'user' => 'root',
                     'password' => 'root',
                     'dbname' => 'test',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

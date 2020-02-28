@@ -16,12 +16,12 @@ declare(strict_types=1);
 namespace Drift\DBAL\Tests;
 
 /**
- * Class SQLiteConnectionTest
+ * Class SQLiteConnectionTest.
  */
 class SQLiteConnectionTest extends ConnectionTest
 {
     /**
-     * Get configuration
+     * Get configuration.
      *
      * @return array
      */
@@ -34,8 +34,8 @@ class SQLiteConnectionTest extends ConnectionTest
                     'user' => 'root',
                     'password' => 'root',
                     'dbname' => ':memory:',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

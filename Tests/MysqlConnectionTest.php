@@ -16,12 +16,12 @@ declare(strict_types=1);
 namespace Drift\DBAL\Tests;
 
 /**
- * Class MysqlConnectionTest
+ * Class MysqlConnectionTest.
  */
 class MysqlConnectionTest extends ConnectionTest
 {
     /**
-     * Get configuration
+     * Get configuration.
      *
      * @return array
      */
@@ -36,8 +36,8 @@ class MysqlConnectionTest extends ConnectionTest
                     'user' => 'root',
                     'password' => 'root',
                     'dbname' => 'test',
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }
