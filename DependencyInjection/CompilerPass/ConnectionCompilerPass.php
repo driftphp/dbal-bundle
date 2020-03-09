@@ -46,6 +46,11 @@ class ConnectionCompilerPass implements CompilerPassInterface
         }
 
         foreach ($connectionsConfiguration as $connectionName => $connectionConfiguration) {
+
+            $connectionConfiguration = array_map(function($value) use ($container) {
+                return $container->resolveEnvPlaceholders($value, true);
+            }, $connectionConfiguration);
+
             $this->createConnection(
                 $container,
                 $connectionName,

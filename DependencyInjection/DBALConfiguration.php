@@ -58,7 +58,7 @@ class DBALConfiguration extends BaseConfiguration
                             ->scalarNode('host')
                                 ->defaultValue('')
                             ->end()
-                            ->integerNode('port')
+                            ->scalarNode('port')
                                 ->defaultValue(0)
                             ->end()
                             ->scalarNode('user')
