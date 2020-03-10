@@ -25,6 +25,7 @@ use Drift\DBAL\Driver\PostgreSQL\PostgreSQLDriver;
 use Drift\DBAL\Driver\SQLite\SQLiteDriver;
 use Exception;
 use React\EventLoop\LoopInterface;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -71,6 +72,23 @@ class ConnectionCompilerPass implements CompilerPassInterface
         string $connectionName,
         array $connectionConfiguration
     ) {
+
+        if ('sqlite' !== $connectionConfiguration['driver']) {
+            if (empty($connectionConfiguration['host'])) {
+                throw new InvalidConfigurationException(sprintf(
+                    'Host must be configured using driver %s',
+                    $connectionConfiguration['driver']
+                ));
+            }
+
+            if (empty($connectionConfiguration['port'])) {
+                throw new InvalidConfigurationException(sprintf(
+                    'Port must be configured using driver %s',
+                    $connectionConfiguration['driver']
+                ));
+            }
+        }
+
         $this->createCredentials(
             $container,
             $connectionName,
