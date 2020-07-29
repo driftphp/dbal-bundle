@@ -37,6 +37,14 @@ class PostgresConnectionTest extends ConnectionTest
                     'password' => 'root',
                     'dbname' => 'test',
                 ],
+                'nopassword' => [
+                    'driver' => 'postgres',
+                    'host' => '127.0.0.1',
+                    'port' => 5432,
+                    'user' => 'root',
+                    'password' => null,
+                    'dbname' => 'test',
+                ],
             ],
         ];
     }
