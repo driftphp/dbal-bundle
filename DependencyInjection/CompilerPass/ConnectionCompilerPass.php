@@ -150,7 +150,7 @@ class ConnectionCompilerPass implements CompilerPassInterface
                     $connectionConfiguration['host'],
                     $connectionConfiguration['port'],
                     $connectionConfiguration['user'],
-                    $connectionConfiguration['password'],
+                    $connectionConfiguration['password'] ?? '',
                     $connectionConfiguration['dbname'],
                     $connectionConfiguration['options'] ?? [],
                 ]

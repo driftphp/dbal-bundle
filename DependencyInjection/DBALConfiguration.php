@@ -49,7 +49,7 @@ class DBALConfiguration extends BaseConfiguration
                                 ->isRequired()
                             ->end()
                             ->scalarNode('password')
-                                ->isRequired()
+                                ->defaultValue('')
                             ->end()
                             ->scalarNode('dbname')
                                 ->isRequired()

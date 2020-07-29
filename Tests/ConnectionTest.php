@@ -55,6 +55,10 @@ abstract class ConnectionTest extends BaseFunctionalTest
                     'alias' => Connection::class,
                     'public' => true,
                 ],
+                'dbal.nopassword_connection_test' => [
+                    'alias' => 'dbal.nopassword_connection',
+                    'public' => true,
+                ],
                 'reactphp.event_loop' => [
                     'class' => LoopInterface::class,
                     'public' => true,
@@ -90,16 +94,20 @@ abstract class ConnectionTest extends BaseFunctionalTest
      */
     public function testConnectionIsBuilt()
     {
+        $this->expectNotToPerformAssertions();
+
         $this->get('dbal.main_connection_test');
         $this->get('dbal.main_connection_alias_test');
     }
 
     /**
      * Test find one element.
+     * 
+     * @dataProvider connectionsToFindOneAgainst
      */
-    public function testFindOneSimpleElement()
+    public function testFindOneSimpleElement($connectionKey)
     {
-        $connection = $this->get('dbal.main_connection_test');
+        $connection = $this->get($connectionKey);
 
         $promise = $connection
             ->dropTable('test')
@@ -129,5 +137,13 @@ abstract class ConnectionTest extends BaseFunctionalTest
             });
 
         await($promise, self::get('reactphp.event_loop'));
+    }
+
+    public function connectionsToFindOneAgainst()
+    {
+        return [
+            ['dbal.main_connection_test'],
+            ['dbal.nopassword_connection_test']
+        ];
     }
 }
