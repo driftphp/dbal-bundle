@@ -17,7 +17,6 @@ namespace Drift\DBAL\DependencyInjection;
 
 use Mmoreram\BaseBundle\DependencyInjection\BaseConfiguration;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Class DBALConfiguration.
@@ -38,6 +37,9 @@ class DBALConfiguration extends BaseConfiguration
                         ->children()
                             ->scalarNode('driver')
                                 ->isRequired()
+                            ->end()
+                            ->scalarNode('driver_version')
+                                ->defaultNull()
                             ->end()
                             ->scalarNode('host')
                                 ->defaultValue('')
