@@ -16,9 +16,9 @@ declare(strict_types=1);
 namespace Drift\DBAL\Tests;
 
 /**
- * Class PostgresConnectionTest.
+ * Class MysqlWithVersionConnectionTest.
  */
-class PostgresConnectionTest extends ConnectionTest
+class MysqlWithVersionConnectionTest extends ConnectionTest
 {
     /**
      * Get configuration.
@@ -30,9 +30,10 @@ class PostgresConnectionTest extends ConnectionTest
         return [
             'connections' => [
                 'main' => [
-                    'driver' => 'postgres',
+                    'driver' => 'mysql',
+                    'driver_version' => '57',
                     'host' => '127.0.0.1',
-                    'port' => 5432,
+                    'port' => 3306,
                     'user' => 'root',
                     'password' => 'root',
                     'dbname' => 'test',

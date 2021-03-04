@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace Drift\DBAL\Tests;
 
+use function Clue\React\Block\await;
 use Doctrine\DBAL\Exception\TableExistsException;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Drift\DBAL\Connection;
 use Drift\DBAL\DBALBundle;
-use function Clue\React\Block\await;
 use Mmoreram\BaseBundle\Kernel\DriftBaseKernel;
 use Mmoreram\BaseBundle\Tests\BaseFunctionalTest;
 use React\EventLoop\Factory;
@@ -53,10 +53,6 @@ abstract class ConnectionTest extends BaseFunctionalTest
                 ],
                 'dbal.main_connection_alias_test' => [
                     'alias' => Connection::class,
-                    'public' => true,
-                ],
-                'dbal.nopassword_connection_test' => [
-                    'alias' => 'dbal.nopassword_connection',
                     'public' => true,
                 ],
                 'reactphp.event_loop' => [
@@ -102,7 +98,7 @@ abstract class ConnectionTest extends BaseFunctionalTest
 
     /**
      * Test find one element.
-     * 
+     *
      * @dataProvider connectionsToFindOneAgainst
      */
     public function testFindOneSimpleElement($connectionKey)
@@ -143,7 +139,6 @@ abstract class ConnectionTest extends BaseFunctionalTest
     {
         return [
             ['dbal.main_connection_test'],
-            ['dbal.nopassword_connection_test']
         ];
     }
 }

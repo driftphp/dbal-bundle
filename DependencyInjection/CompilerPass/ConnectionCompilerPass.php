@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace Drift\DBAL\DependencyInjection\CompilerPass;
 
-use Doctrine\DBAL\Platforms\MySqlPlatform;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Drift\DBAL\Connection;
 use Drift\DBAL\Credentials;
@@ -47,8 +45,7 @@ class ConnectionCompilerPass implements CompilerPassInterface
         }
 
         foreach ($connectionsConfiguration as $connectionName => $connectionConfiguration) {
-
-            $connectionConfiguration = array_map(function($value) use ($container) {
+            $connectionConfiguration = array_map(function ($value) use ($container) {
                 return $container->resolveEnvPlaceholders($value, true);
             }, $connectionConfiguration);
 
@@ -72,20 +69,13 @@ class ConnectionCompilerPass implements CompilerPassInterface
         string $connectionName,
         array $connectionConfiguration
     ) {
-
         if ('sqlite' !== $connectionConfiguration['driver']) {
             if (empty($connectionConfiguration['host'])) {
-                throw new InvalidConfigurationException(sprintf(
-                    'Host must be configured using driver %s',
-                    $connectionConfiguration['driver']
-                ));
+                throw new InvalidConfigurationException(sprintf('Host must be configured using driver %s', $connectionConfiguration['driver']));
             }
 
             if (empty($connectionConfiguration['port'])) {
-                throw new InvalidConfigurationException(sprintf(
-                    'Port must be configured using driver %s',
-                    $connectionConfiguration['driver']
-                ));
+                throw new InvalidConfigurationException(sprintf('Port must be configured using driver %s', $connectionConfiguration['driver']));
             }
         }
 
@@ -105,7 +95,10 @@ class ConnectionCompilerPass implements CompilerPassInterface
         $platformDefinitionName = "dbal.{$connectionName}_platform";
         $container->setDefinition(
             $platformDefinitionName,
-            $this->getPlatformDefinition($connectionConfiguration['driver'])
+            $this->getPlatformDefinition(
+                $connectionConfiguration['driver'],
+                $connectionConfiguration['driver_version'] ?? null
+            )
         );
 
         $connectionDefinition = new Definition(Connection::class, [
@@ -119,7 +112,7 @@ class ConnectionCompilerPass implements CompilerPassInterface
             'createConnected',
         ]);
 
-        $connectionDefinition->setPrivate(true);
+        $connectionDefinition->setPublic(false);
         $connectionDefinition->addTag('preload');
         $connectionDefinition->addTag('await');
 
@@ -195,21 +188,29 @@ class ConnectionCompilerPass implements CompilerPassInterface
     /**
      * Get platform definition.
      *
-     * @param string $driver
+     * @param string      $driver
+     * @param string|null $driverVersion
      *
      * @return Definition
      *
      * @throws Exception Invalid Driver
      */
-    private function getPlatformDefinition(string $driver): Definition
-    {
+    private function getPlatformDefinition(
+        string $driver,
+        ?string $driverVersion
+    ): Definition {
         switch ($driver) {
             case 'mysql':
+                $driverVersion = $driverVersion ?? '57';
+                $driverNamespace = "Doctrine\\DBAL\\Platforms\\MySQL{$driverVersion}Platform";
 
-                return new Definition(MySqlPlatform::class);
+                return new Definition($driverNamespace);
             case 'postgres':
 
-                return new Definition(PostgreSqlPlatform::class);
+                $driverVersion = $driverVersion ?? '94';
+                $driverNamespace = "Doctrine\\DBAL\\Platforms\\PostgreSQL{$driverVersion}Platform";
+
+                return new Definition($driverNamespace);
             case 'sqlite':
 
                 return new Definition(SqlitePlatform::class);

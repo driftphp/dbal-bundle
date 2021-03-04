@@ -35,12 +35,6 @@ class SQLiteConnectionTest extends ConnectionTest
                     'password' => 'root',
                     'dbname' => ':memory:',
                 ],
-                'nopassword' => [
-                    'driver' => 'sqlite',
-                    'user' => 'root',
-                    'password' => null,
-                    'dbname' => ':memory:',
-                ],
             ],
         ];
     }
