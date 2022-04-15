@@ -37,6 +37,33 @@ class PostgresConnectionTest extends ConnectionTest
                     'password' => 'root',
                     'dbname' => 'test',
                 ],
+                'pool_with_one' => [
+                    'driver' => 'postgres',
+                    'host' => '127.0.0.1',
+                    'port' => 5432,
+                    'user' => 'root',
+                    'password' => 'root',
+                    'dbname' => 'test',
+                    'number_of_connections' => 1,
+                ],
+                'pool_with_many' => [
+                    'driver' => 'postgres',
+                    'host' => '127.0.0.1',
+                    'port' => 5432,
+                    'user' => 'root',
+                    'password' => 'root',
+                    'dbname' => 'test',
+                    'number_of_connections' => 10,
+                ],
+                'pool_with_too_many' => [
+                    'driver' => 'postgres',
+                    'host' => '127.0.0.1',
+                    'port' => 5432,
+                    'user' => 'root',
+                    'password' => 'root',
+                    'dbname' => 'test',
+                    'number_of_connections' => 100,
+                ],
             ],
         ];
     }
