@@ -35,6 +35,27 @@ class SQLiteConnectionTest extends ConnectionTest
                     'password' => 'root',
                     'dbname' => ':memory:',
                 ],
+                'pool_with_one' => [
+                    'driver' => 'sqlite',
+                    'user' => 'root',
+                    'password' => 'root',
+                    'dbname' => ':memory:',
+                    'number_of_connections' => 1,
+                ],
+                'pool_with_many' => [
+                    'driver' => 'sqlite',
+                    'user' => 'root',
+                    'password' => 'root',
+                    'dbname' => ':memory:',
+                    'number_of_connections' => 10,
+                ],
+                'pool_with_too_many' => [
+                    'driver' => 'sqlite',
+                    'user' => 'root',
+                    'password' => 'root',
+                    'dbname' => ':memory:',
+                    'number_of_connections' => 100,
+                ],
             ],
         ];
     }

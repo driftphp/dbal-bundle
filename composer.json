@@ -13,7 +13,7 @@
 
   "require": {
     "php": "^7.4 | ^8.0",
-    "drift/dbal": "0.1.*",
+    "drift/dbal": "^0.1.5",
     "symfony/dependency-injection": "^5.0",
     "drift/http-kernel": "0.1.*, >=0.1.5",
     "mmoreram/base-bundle": "^2.1"

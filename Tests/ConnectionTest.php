@@ -55,6 +55,18 @@ abstract class ConnectionTest extends BaseFunctionalTest
                     'alias' => Connection::class,
                     'public' => true,
                 ],
+                'dbal.pool_with_one_connection_test' => [
+                    'alias' => 'dbal.pool_with_one_connection',
+                    'public' => true,
+                ],
+                'dbal.pool_with_many_connection_test' => [
+                    'alias' => 'dbal.pool_with_many_connection',
+                    'public' => true,
+                ],
+                'dbal.pool_with_too_many_connection_test' => [
+                    'alias' => 'dbal.pool_with_too_many_connection',
+                    'public' => true,
+                ],
                 'reactphp.event_loop' => [
                     'class' => LoopInterface::class,
                     'public' => true,
@@ -139,6 +151,9 @@ abstract class ConnectionTest extends BaseFunctionalTest
     {
         return [
             ['dbal.main_connection_test'],
+            ['dbal.pool_with_one_connection_test'],
+            ['dbal.pool_with_many_connection_test'],
+            ['dbal.pool_with_too_many_connection_test'],
         ];
     }
 }

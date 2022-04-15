@@ -17,6 +17,7 @@ namespace Drift\DBAL\DependencyInjection\CompilerPass;
 
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Drift\DBAL\Connection;
+use Drift\DBAL\ConnectionPool;
 use Drift\DBAL\Credentials;
 use Drift\DBAL\Driver\Mysql\MysqlDriver;
 use Drift\DBAL\Driver\PostgreSQL\PostgreSQLDriver;
@@ -101,14 +102,14 @@ class ConnectionCompilerPass implements CompilerPassInterface
             )
         );
 
-        $connectionDefinition = new Definition(Connection::class, [
+        $connectionDefinition = new Definition(ConnectionPool::class, [
             new Reference($driverDefinitionName),
             new Reference("dbal.{$connectionName}_credentials"),
             new Reference($platformDefinitionName),
         ]);
 
         $connectionDefinition->setFactory([
-            Connection::class,
+            ConnectionPool::class,
             'createConnected',
         ]);
 
@@ -146,6 +147,7 @@ class ConnectionCompilerPass implements CompilerPassInterface
                     $connectionConfiguration['password'] ?? '',
                     $connectionConfiguration['dbname'],
                     $connectionConfiguration['options'] ?? [],
+                    $connectionConfiguration['connections'] ?? 1,
                 ]
             )
         );
